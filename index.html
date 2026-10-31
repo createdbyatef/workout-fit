@@ -1,0 +1,35 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#147859" />
+    <meta name="description" content="Set Counter - Mobile-first workout set counter, AMRAP, EMOM, Tabata & For Time gym whiteboard tracker" />
+    
+    <!-- PWA & Mobile Web App meta -->
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="/icon-192.svg" />
+    <link rel="apple-touch-icon" href="/icon-192.svg" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Set Counter" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <title>Set Counter — Gym Whiteboard Tracker</title>
+  </head>
+  <body class="bg-board text-ink-main font-sans antialiased min-h-screen selection:bg-ink-blue/20">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Register service worker for offline PWA functionality
+      if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch((err) => {
+            console.log('ServiceWorker registration optional error:', err);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
+
