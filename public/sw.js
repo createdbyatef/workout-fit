@@ -1,4 +1,4 @@
-const CACHE_NAME = 'set-counter-v3';
+const CACHE_NAME = 'set-counter-v4';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

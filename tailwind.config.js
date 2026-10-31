@@ -27,8 +27,8 @@ export default {
         success: 'rgb(var(--accent-green) / <alpha-value>)',
       },
       fontFamily: {
-        sans: ['"Segoe UI"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        condensed: ['"Segoe UI"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        sans: ['var(--font-ui)', 'sans-serif'],
+        condensed: ['var(--font-display)', 'sans-serif'],
       },
       minHeight: {
         'touch-button': '120px',

@@ -1,3 +1,6 @@
+import { FinishDialog } from './FinishDialog';
+import { TimerDial } from './TimerDial';
+import './Workout.css';
 import React, { useState, useRef, useEffect } from 'react';
 import type { WorkoutSplit, TabataConfig } from '../types/workout';
 import type { TimerControls } from '../hooks/useTimer';
@@ -83,10 +86,10 @@ export const TabataRunning: React.FC<TabataRunningProps> = ({
   };
 
   return (
-    <div className="screen-panel timer-panel mx-auto flex flex-col safe-top safe-bottom justify-between">
+    <div className="screen-panel timer-panel performance-timer mx-auto flex flex-col safe-top safe-bottom justify-between">
       {/* Top Bar */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
+        <div className="workout-topbar flex items-center justify-between">
           <div className="min-w-0 flex-1">
             <span className="text-[11px] font-bold uppercase tracking-widest text-ink-blue flex items-center gap-1">
               <Zap className="w-3 h-3" />
@@ -129,60 +132,14 @@ export const TabataRunning: React.FC<TabataRunningProps> = ({
           </div>
         </div>
 
-        {/* Phase Indicator */}
-        <div
-          className={`rounded-2xl p-4 text-center border shadow-sm relative overflow-hidden ${
-            phase === 'work'
-              ? 'bg-success/10 border-success/30'
-              : 'bg-amber-500/10 border-amber-500/30'
-          }`}
-        >
-          {/* Progress bar */}
-          <div className="absolute top-0 left-0 right-0 h-2 bg-board-border/40">
-            <div
-              className="h-full transition-all duration-300 ease-linear bg-ink-blue"
-              style={{ width: `${progressPercent}%` }}
-            />
-          </div>
-
-          {timer.isPaused && (
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 text-amber-600 font-bold text-xs uppercase tracking-wider mb-1 animate-pulse">
-              <Pause className="w-3.5 h-3.5" />
-              Paused
-            </div>
-          )}
-
-          {/* Phase badge */}
-          <div
-            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-condensed font-black text-xl uppercase tracking-wider mb-2 ${
-              phase === 'work'
-                ? 'bg-success text-white animate-pulse'
-                : 'bg-amber-500 text-white'
-            }`}
-          >
-            {phase === 'work' ? (
-              <><Zap className="w-5 h-5" /> WORK</>
-            ) : (
-              <><Pause className="w-5 h-5" /> REST</>
-            )}
-          </div>
-
-          {/* Big countdown */}
-          <div
-            className="font-condensed font-black tracking-tight select-none text-ink-dark"
-            style={{ fontSize: 'clamp(4.5rem, 18vw, 6.5rem)', lineHeight: 0.95 }}
-          >
-            {formatMMSS(phaseTimeLeft)}
-          </div>
-
-          <div className="flex items-center justify-between text-xs text-ink-muted mt-2 px-2 font-medium">
-            <span>Elapsed: {formatMMSS(elapsed)}</span>
-            <span>Overall: {progressPercent}%</span>
-          </div>
+        <div className={`timer-stage ${phase === 'rest' ? 'rest-phase' : ''}`}>
+          <TimerDial value={formatMMSS(phaseTimeLeft)} label={phase === 'work' ? 'Work interval' : 'Rest & recover'}
+            progress={progressPercent} paused={timer.isPaused} badge={phase === 'work' ? 'Work phase' : 'Rest phase'} />
+          <div className="timer-stage-meta"><span>Elapsed <strong>{formatMMSS(elapsed)}</strong></span><span>Round <strong>{currentRound} / {config.totalRounds}</strong></span></div>
         </div>
 
         {/* Sets Counter */}
-        <div className="bg-board-card border border-board-border rounded-2xl p-3 flex items-center justify-between px-6 shadow-sm">
+        <div className="session-set-count bg-board-card border border-board-border rounded-2xl p-3 flex items-center justify-between px-6 shadow-sm">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-ink-muted block">Sets Done</span>
             <span className="text-xs text-ink-muted/80">
@@ -192,14 +149,14 @@ export const TabataRunning: React.FC<TabataRunningProps> = ({
             </span>
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="font-condensed font-black text-5xl text-ink-blue leading-none">{totalSets}</span>
+            <span key={totalSets} className="set-number font-condensed font-black text-5xl text-ink-blue leading-none">{totalSets}</span>
             <span className="font-condensed text-xl font-bold uppercase text-ink-muted">SETS</span>
           </div>
         </div>
       </div>
 
       {/* Split List */}
-      <div className="my-3 flex-1 min-h-[120px] max-h-[170px] flex flex-col bg-board-card border border-board-border rounded-2xl p-3 overflow-hidden shadow-sm">
+      <div className="split-feed my-3 flex-1 min-h-[120px] max-h-[170px] flex flex-col bg-board-card border border-board-border rounded-2xl p-3 overflow-hidden shadow-sm">
         <div className="flex items-center justify-between pb-2 border-b border-board-border text-xs font-bold uppercase tracking-wider text-ink-muted">
           <span className="flex items-center gap-1.5">
             <ListOrdered className="w-3.5 h-3.5 text-ink-blue" />
@@ -232,7 +189,7 @@ export const TabataRunning: React.FC<TabataRunningProps> = ({
       </div>
 
       {/* Bottom Actions */}
-      <div className="space-y-3 pt-1">
+      <div className="session-actions space-y-3 pt-1">
         {/* BIG Set Done button */}
         <button
           type="button"
@@ -252,7 +209,7 @@ export const TabataRunning: React.FC<TabataRunningProps> = ({
                   Set Done!
                 </span>
               </div>
-              <span className="text-xs font-semibold uppercase tracking-widest text-white/90">
+              <span className="text-xs font-semibold uppercase tracking-widest set-action-hint">
                 Tap During Work Phase
               </span>
             </>
@@ -298,37 +255,11 @@ export const TabataRunning: React.FC<TabataRunningProps> = ({
         </div>
       </div>
 
-      {/* Confirm Finish Modal */}
       {showConfirmFinish && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
-          <div className="bg-board-card border border-board-border rounded-2xl p-5 max-w-xs w-full shadow-2xl text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-marker-red/10 text-marker-red flex items-center justify-center mx-auto">
-              <Square className="w-6 h-6 fill-current" />
-            </div>
-            <div>
-              <h3 className="font-condensed font-bold text-2xl text-ink-dark uppercase">End Session?</h3>
-              <p className="text-xs text-ink-muted mt-1 leading-relaxed">
-                Finish this Tabata workout and log your <strong>{totalSets} set{totalSets !== 1 ? 's' : ''}</strong>?
-              </p>
-            </div>
-            <div className="space-y-2">
-              <button
-                type="button"
-                onClick={() => { setShowConfirmFinish(false); onFinishSession(); }}
-                className="w-full py-3 bg-marker-red hover:bg-marker-red-hover text-white font-condensed font-bold text-lg uppercase tracking-wide rounded-xl shadow transition-all"
-              >
-                Yes, Finish Now
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowConfirmFinish(false)}
-                className="w-full py-2.5 bg-board border border-board-border text-ink-main font-semibold text-sm rounded-xl hover:bg-board-border/40 transition-all"
-              >
-                Cancel — Keep Going
-              </button>
-            </div>
-          </div>
-        </div>
+        <FinishDialog onCancel={() => setShowConfirmFinish(false)}
+          onConfirm={() => { setShowConfirmFinish(false); onFinishSession(); }}>
+          Finish this Tabata workout and log your <strong>{totalSets} set{totalSets !== 1 ? 's' : ''}</strong>?
+        </FinishDialog>
       )}
     </div>
   );

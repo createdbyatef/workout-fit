@@ -135,7 +135,7 @@ export const Analytics: React.FC<AnalyticsProps> = ({ sessions, onBack }) => {
             No sessions this week
           </p>
         ) : (
-          <div className="flex items-end gap-2 justify-around">
+          <div className="weekly-volume-chart">
             {weeklyData.map((day) => {
               const barHeight =
                 day.totalSets > 0
@@ -147,7 +147,7 @@ export const Analytics: React.FC<AnalyticsProps> = ({ sessions, onBack }) => {
                 <div
                   key={day.dateStr}
                   className="flex flex-col items-center"
-                  style={{ minWidth: 32 }}
+                  style={{ minWidth: 0 }}
                 >
                   <div
                     className={`w-6 rounded-t-md transition-all ${
@@ -216,7 +216,7 @@ export const Analytics: React.FC<AnalyticsProps> = ({ sessions, onBack }) => {
             >
               <span
                 className={`text-[9px] font-condensed ${
-                  day.count >= 2 ? 'text-white' : 'text-ink-muted'
+                  day.count >= 2 ? 'text-[#101214]' : day.count === 1 ? 'text-ink-main' : 'text-ink-muted'
                 }`}
               >
                 {day.dayOfMonth}

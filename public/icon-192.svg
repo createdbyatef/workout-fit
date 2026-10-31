@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="192" height="192">
   <defs>
     <linearGradient id="bg192" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#147859"/>
-      <stop offset="100%" stop-color="#143b2e"/>
+      <stop offset="0%" stop-color="#1c2023"/>
+      <stop offset="100%" stop-color="#101214"/>
     </linearGradient>
     <linearGradient id="accent192" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#d3ef9c"/>
-      <stop offset="100%" stop-color="#bbda84"/>
+      <stop offset="0%" stop-color="#c8ff32"/>
+      <stop offset="100%" stop-color="#c8ff32"/>
     </linearGradient>
   </defs>
   <rect width="512" height="512" rx="112" fill="url(#bg192)"/>
@@ -15,15 +15,15 @@
     <rect x="-80" y="-10" width="160" height="20" rx="6" fill="#FFFFFF"/>
     <rect x="-115" y="-55" width="22" height="110" rx="8" fill="#FFFFFF"/>
     <rect x="-135" y="-40" width="14" height="80" rx="6" fill="rgba(255,255,255,0.8)"/>
-    <rect x="-90" y="-28" width="10" height="56" rx="4" fill="#d3ef9c"/>
+    <rect x="-90" y="-28" width="10" height="56" rx="4" fill="#c8ff32"/>
     <rect x="93" y="-55" width="22" height="110" rx="8" fill="#FFFFFF"/>
     <rect x="121" y="-40" width="14" height="80" rx="6" fill="rgba(255,255,255,0.8)"/>
-    <rect x="80" y="-28" width="10" height="56" rx="4" fill="#d3ef9c"/>
+    <rect x="80" y="-28" width="10" height="56" rx="4" fill="#c8ff32"/>
   </g>
   
   <g transform="translate(256, 360)">
     <rect x="-110" y="-36" width="220" height="72" rx="36" fill="url(#accent192)"/>
-    <text x="0" y="14" font-family="'Barlow Condensed', sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" letter-spacing="4">SET +1</text>
+    <text x="0" y="14" font-family="'Barlow Condensed', sans-serif" font-weight="900" font-size="44" fill="#101214" text-anchor="middle" letter-spacing="4">SET +1</text>
   </g>
 </svg>
 

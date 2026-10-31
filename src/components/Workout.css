@@ -1,0 +1,185 @@
+/* Training and results share the same performance-focused visual language. */
+.performance-timer {
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, .78fr);
+  gap: 18px;
+  align-content: start;
+}
+.performance-timer > .space-y-3:first-child { display: contents; }
+.performance-timer > .space-y-3:first-child > * { margin-top: 0; }
+.performance-timer .workout-topbar {
+  grid-column: 1 / -1;
+  gap: 16px;
+  padding: 8px 0 12px;
+}
+.performance-timer .workout-topbar h1 {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -.01em;
+  margin-top: 3px;
+}
+.performance-timer .workout-topbar > div:last-child { flex-shrink: 0; }
+.performance-timer .workout-topbar button { min-width: 42px; min-height: 42px; display: grid; place-items: center; }
+.timer-stage {
+  grid-column: 1;
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: radial-gradient(ellipse at 50% 40%, #c8ff3206, transparent 70%), var(--surface);
+  padding: 24px 16px 18px;
+}
+.timer-dial { width: min(100%, 310px); aspect-ratio: 1; position: relative; color: var(--accent); }
+.timer-dial-track { display: block; width: 100%; height: 100%; overflow: visible; }
+.timer-dial-track circle { fill: none; }
+.dial-guide { stroke: #ffffff0c; stroke-width: 1; stroke-dasharray: 1 8; }
+.dial-rail { stroke: #ffffff09; stroke-width: 6; }
+.dial-progress { stroke: currentColor; stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset .4s linear; }
+.timer-dial-content { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+.timer-state { display: inline-flex; align-items: center; gap: 6px; text-transform: uppercase; font-size: 10px; font-weight: 650; letter-spacing: .12em; color: var(--accent); }
+.timer-state > span { height: 5px; width: 5px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px #c8ff3240; }
+.timer-state.paused { color: #f6c76b; }
+.timer-dial-value { font-family: var(--font-display); font-size: clamp(76px, 12vw, 100px); line-height: 1.13; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -.025em; }
+.timer-dial-label { font-size: 11px; color: var(--muted); }
+.dial-progress-caption { position: absolute; bottom: 32px; left: 0; right: 0; text-align: center; color: var(--muted); font-size: 8px; letter-spacing: .13em; font-weight: 600; }
+.timer-dial.is-urgent { color: #ff8274; }
+.timer-dial.is-urgent .timer-dial-value { color: #ff8274; }
+.timer-dial.is-paused { color: #f6c76b; }
+.rest-phase .timer-dial { color: #f6c76b; }
+.timer-stage-meta { display: flex; align-items: center; justify-content: space-between; gap: 18px; width: 100%; border-top: 1px solid var(--border); padding: 15px 4px 0; margin-top: 14px; color: var(--muted); font-size: 10px; }
+.timer-stage-meta strong { color: var(--text); margin-left: 5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.performance-timer .session-set-count { border-radius: 18px; padding: 22px; gap: 12px; min-height: 112px; }
+.performance-timer .session-set-count > div:first-child > span:first-child { font-size: 10px; letter-spacing: .12em; margin-bottom: 5px; }
+.performance-timer .session-set-count > div:first-child > span:last-child { font-size: 10px; }
+.performance-timer .session-set-count .set-number { font-family: var(--font-display); font-size: 64px; font-weight: 700; animation: set-count-pop .25s ease-out; }
+.performance-timer .session-set-count > div:last-child > span:last-child { font-size: 13px; font-weight: 500; }
+.performance-timer .split-feed { margin: 0; min-height: 220px; max-height: 278px; border-radius: 18px; padding: 18px; }
+.performance-timer .split-feed > div:first-child { font-size: 9px; letter-spacing: .1em; padding-bottom: 13px; }
+.performance-timer .split-feed > div:last-child { padding-top: 8px; }
+.performance-timer .split-feed > div:last-child > div { font-size: 12px; }
+.performance-timer .split-feed .text-ink-muted\/80 { font-size: 11px; line-height: 1.8; color: var(--muted); }
+.performance-timer .session-actions { grid-column: 1 / -1; padding-top: 0; }
+.performance-timer .set-action {
+  min-height: 105px;
+  border-radius: 18px;
+  background: var(--accent);
+  color: #101214;
+  border: 1px solid var(--accent);
+  box-shadow: 0 5px 30px #c8ff320c;
+  gap: 5px;
+}
+.performance-timer .set-action:not(:disabled):hover { background: #d9ff73; border-color: #d9ff73; box-shadow: 0 7px 30px #c8ff321a; transform: translateY(-1px); }
+.performance-timer .set-action:not(:disabled):active { transform: scale(.985); }
+.performance-timer .set-action:disabled { background: #252b22; border-color: #ffffff0e; color: #9aa87c; opacity: .75; box-shadow: none; }
+.performance-timer .set-action .font-condensed { font-family: var(--font-display); font-size: 38px; letter-spacing: .015em; font-weight: 700; filter: none; }
+.performance-timer .set-action .set-action-hint { color: inherit; font-size: 9px; letter-spacing: .1em; font-weight: 550; opacity: .7; }
+.performance-timer .set-action > div > svg { width: 27px; height: 27px; }
+.performance-timer .session-actions > .grid { gap: 10px; }
+.performance-timer .session-actions > .grid > button { min-height: 58px; flex-direction: row; gap: 8px; font-size: 11px; border-radius: 12px; font-weight: 600; }
+.performance-timer .session-actions > .grid > button:hover:not(:disabled) { background: #252a2d; }
+.performance-timer .session-confirm { padding: 24px; }
+.performance-timer .session-confirm > div { max-width: 360px; padding: 28px; background: #1c2023; border-color: #363c3f; }
+.performance-timer .session-confirm h3 { font-family: var(--font-display); font-size: 32px; font-weight: 700; }
+.performance-timer .session-confirm p { font-size: 12px; line-height: 1.8; }
+.performance-timer .session-confirm button { min-height: 44px; }
+
+.performance-summary { max-width: 720px; }
+.result-heading { text-align: center; position: relative; padding: 0 20px 28px; }
+.result-trophy { color: var(--accent); border: 1px solid #c8ff3230; background: #c8ff320b; width: 68px; height: 68px; display: grid; place-items: center; border-radius: 50%; margin: 0 auto 20px; position: relative; }
+.result-trophy::before { content: ''; position: absolute; inset: -7px; border: 1px dashed #c8ff3220; border-radius: inherit; }
+.result-eyebrow { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 9px; letter-spacing: .16em; font-weight: 600; }
+.performance-summary .result-heading h1 { font-family: var(--font-display); font-size: clamp(52px, 9vw, 76px); line-height: .93; font-weight: 700; letter-spacing: -.015em; margin: 15px 0 18px; text-transform: uppercase; }
+.result-heading h1 > span { color: var(--accent); }
+.result-heading > p { font-size: 14px; font-weight: 600; }
+.result-heading > p > span { color: #535b5f; margin: 0 8px; }
+.result-date { display: block; color: var(--muted); font-size: 10px; margin-top: 8px; }
+.result-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.result-stat { min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; }
+.result-stat-primary { background: #c8ff3208; border-color: #c8ff3233; }
+.result-stat > span:first-child { display: flex; align-items: center; gap: 6px; font-size: 9px; color: var(--muted); letter-spacing: .12em; font-weight: 600; }
+.result-stat > strong { display: flex; align-items: baseline; gap: 10px; font-family: var(--font-display); font-size: clamp(48px, 8vw, 76px); line-height: 1.15; font-weight: 700; letter-spacing: -.02em; margin: 8px 0 3px; font-variant-numeric: tabular-nums; }
+.result-stat-primary > strong { color: var(--accent); }
+.result-stat > strong > span { font-family: var(--font-ui); font-size: 10px; font-weight: 500; color: var(--muted); letter-spacing: .08em; }
+.result-stat > span:last-child { color: var(--muted); font-size: 10px; }
+.result-insights { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; border: 1px solid var(--border); border-radius: 16px; padding: 20px 24px; background: var(--surface); margin-top: 14px; }
+.result-insights > div { display: flex; flex-direction: column; gap: 9px; }
+.result-insights > div + div { border-left: 1px solid var(--border); padding-left: 24px; }
+.result-insights span { display: flex; align-items: center; gap: 7px; font-size: 10px; color: var(--muted); }
+.result-insights svg { color: var(--accent); }
+.result-insights strong { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.result-splits { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px 24px; margin-top: 20px; }
+.result-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
+.performance-summary .result-section-heading h2 { display: flex; align-items: center; gap: 8px; margin: 0; font-family: var(--font-ui); font-size: 10px; font-weight: 600; letter-spacing: .1em; color: var(--muted); }
+.result-section-heading h2 svg { color: var(--accent); }
+.result-section-heading > span { color: var(--muted); font-size: 10px; }
+.result-split-list { max-height: 240px; overflow-y: auto; }
+.result-split { display: flex; align-items: center; gap: 12px; min-height: 53px; border-bottom: 1px solid #ffffff07; font-size: 11px; }
+.result-split:last-child { border-bottom: 0; }
+.result-split.fastest > strong { color: var(--accent); }
+.result-set-index { color: var(--muted); font-family: var(--font-display); font-size: 18px; }
+.fastest-tag { display: flex; align-items: center; gap: 3px; padding: 3px 6px; border-radius: 4px; color: var(--accent); background: #c8ff320b; font-size: 8px; }
+.result-cumulative { color: var(--muted); font-size: 9px; margin-left: auto; }
+.result-empty { text-align: center; font-size: 11px; color: var(--muted); padding: 26px 0 10px; }
+.result-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px; margin-top: 22px; }
+.result-actions button { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+.result-share { border: 1px solid var(--border); color: var(--text); background: var(--surface); }
+.result-share:hover { background: #252a2d; }
+.result-restart { background: var(--accent); color: #101214; border: 1px solid var(--accent); }
+.result-restart:hover { background: #d9ff73; }
+.result-footer { color: #858e91; font-size: 8px; letter-spacing: .18em; text-align: center; padding-top: 28px; }
+@keyframes set-count-pop { from { transform: scale(1.18); opacity: .65; } to { transform: scale(1); opacity: 1; } }
+@media (max-width: 680px) {
+  .performance-timer { display: flex; flex-direction: column; gap: 12px; max-width: 480px; }
+  .performance-timer > .space-y-3:first-child { display: contents; }
+  .performance-timer .workout-topbar { padding: 0 0 4px; gap: 10px; }
+  .performance-timer .workout-topbar h1 { font-size: 30px; }
+  .performance-timer .workout-topbar > div:last-child { gap: 5px; }
+  .performance-timer .workout-topbar > div:last-child > div { font-size: 9px; padding: 6px; }
+  .performance-timer .workout-topbar > div:last-child > div:has(> .lucide-eye) { display: none; }
+  .timer-stage { padding: 16px 18px 14px; border-radius: 18px; }
+  .timer-dial { width: min(100%, 220px); }
+  .timer-dial-value { font-size: 78px; }
+  .timer-state { font-size: 8px; letter-spacing: .1em; }
+  .timer-dial-label { font-size: 10px; }
+  .dial-progress-caption { bottom: 22px; font-size: 7px; }
+  .timer-stage-meta { margin-top: 4px; padding-top: 12px; }
+  .performance-timer .session-set-count { padding: 12px 20px; min-height: 72px; }
+  .performance-timer .session-set-count .set-number { font-size: 46px; }
+  .performance-timer .split-feed { order: 3; min-height: 100px; max-height: 150px; padding: 14px 18px; }
+  .performance-timer .session-actions { order: 2; }
+  .performance-timer .session-actions > .grid > button { min-height: 52px; }
+  .performance-timer .set-action { min-height: 88px; }
+  .performance-timer .set-action .font-condensed { font-size: 36px; }
+  .result-heading { padding-top: 5px; }
+  .result-heading h1 > span { white-space: nowrap; }
+  .performance-summary .result-heading h1 { font-size: clamp(46px, 13vw, 64px); }
+  .result-stat { padding: 18px; }
+  .result-stat > span:first-child { font-size: 8px; letter-spacing: .08em; }
+  .result-stat > strong { font-size: 52px; gap: 6px; }
+  .result-stat > span:last-child { font-size: 9px; }
+  .result-insights { gap: 14px; padding: 18px; }
+  .result-insights > div + div { padding-left: 14px; }
+  .result-insights span { font-size: 9px; }
+  .result-insights span svg { width: 13px; height: 13px; }
+  .result-splits { padding: 18px; }
+  .result-actions { grid-template-columns: 1fr; }
+  .result-restart { grid-row: 1; }
+  .result-footer { padding-bottom: env(safe-area-inset-bottom); }
+}
+@media (max-width: 360px) {
+  .performance-timer .workout-topbar h1 { font-size: 27px; }
+  .result-stat { padding: 14px; }
+  .result-stat > strong { font-size: 44px; }
+  .result-split { gap: 8px; }
+}
+.timer-dial-value.long-time { font-size: 78px; }
+@media (max-width: 680px) { .timer-dial-value.long-time { font-size: 64px; } }
+
+.result-stat > strong.long-time { font-size: 60px; }
+@media (max-width: 680px) { .result-stat > strong.long-time { font-size: 36px; } }

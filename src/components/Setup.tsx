@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { trainingTemplates } from '../utils/training';
 import type {
   WorkoutMode,
@@ -123,10 +123,10 @@ export const Setup: React.FC<SetupProps> = ({ initialMode, initialConfig, onStar
         </button>
         <div>
           <h1 className="font-condensed text-2xl font-extrabold tracking-tight text-ink-dark uppercase">
-            Setup Workout
+            Build your session.
           </h1>
           <p className="text-xs text-ink-muted font-medium -mt-0.5">
-            Configure & start your session
+            YOUR WORKOUT. YOUR PACE. YOUR NEXT LEVEL.
           </p>
         </div>
       </header>
